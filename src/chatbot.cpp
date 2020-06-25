@@ -35,10 +35,10 @@ ChatBot::~ChatBot()
     std::cout << "ChatBot Destructor" << std::endl;
 
     // deallocate heap memory
-    if (_image != NULL) // Attention: wxWidgets used NULL and not nullptr
+    if (_image)
     {
         delete _image;
-        _image = NULL;
+        _image = nullptr;
     }
 }
 
@@ -69,8 +69,8 @@ void ChatBot::ReceiveMessageFromUser(std::string message)
     if (levDists.size() > 0)
     {
         // sort in ascending order of Levenshtein distance (best fit is at the top)
-        const auto& closestEdge = std::max_element(levDists.begin(), levDists.end(), 
-            [](const EdgeDist &a, const EdgeDist &b) { return a.second > b.second; });
+        const auto &closestEdge = std::max_element(levDists.begin(), levDists.end(),
+                                                   [](const EdgeDist &a, const EdgeDist &b) { return a.second > b.second; });
         newNode = closestEdge->first->GetChildNode(); // after sorting the best edge is at first position
     }
     else
