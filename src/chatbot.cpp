@@ -45,6 +45,63 @@ ChatBot::~ChatBot()
 //// STUDENT CODE
 ////
 
+ChatBot::ChatBot(const ChatBot& sourceChatBot) {
+    std::cout << "Chatbot Copy Constructor" << std::endl;
+    // Deep copy the _image 
+    _image = new wxBitmap();
+    *_image = *(sourceChatBot._image);
+    // We just shallow copy the handles, shouldn't deep copy as we don't own them
+    _currentNode = sourceChatBot._currentNode;
+    _rootNode = sourceChatBot._rootNode;
+    _chatLogic = sourceChatBot._chatLogic;
+}
+
+ChatBot& ChatBot::operator=(const ChatBot& sourceChatBot) {
+    std::cout << "Chatbot Copy Assignment Operator" << std::endl;
+    // Deep copy the _image 
+    _image = new wxBitmap();
+    *_image = *(sourceChatBot._image);
+    // We just shallow copy the handles, shouldn't deep copy as we don't own them
+    _currentNode = sourceChatBot._currentNode;
+    _rootNode = sourceChatBot._rootNode;
+    _chatLogic = sourceChatBot._chatLogic;
+    return *this;
+}
+
+ChatBot::ChatBot(ChatBot&& sourceChatBot) {
+    std::cout << "Chatbot Move Constructor" << std::endl;
+    // Transfer image completely
+    _image = new wxBitmap();
+    *_image = *(sourceChatBot._image);
+    delete sourceChatBot._image;    // source becomes unusable
+    sourceChatBot._image = nullptr;
+    // Transfer handles
+    _currentNode = sourceChatBot._currentNode;
+    sourceChatBot._currentNode = nullptr;   // source becomes unusable
+    _rootNode = sourceChatBot._rootNode;
+    sourceChatBot._rootNode = nullptr;
+    _chatLogic = sourceChatBot._chatLogic;
+    sourceChatBot._chatLogic = nullptr;
+}
+
+
+ChatBot& ChatBot::operator=(ChatBot&& sourceChatBot) {
+    std::cout << "Chatbot Move Constructor" << std::endl;
+    // Transfer image completely
+    _image = new wxBitmap();
+    *_image = *(sourceChatBot._image);
+    delete sourceChatBot._image;    // source becomes unusable
+    sourceChatBot._image = nullptr;
+    // Transfer handles
+    _currentNode = sourceChatBot._currentNode;
+    sourceChatBot._currentNode = nullptr;   // source becomes unusable
+    _rootNode = sourceChatBot._rootNode;
+    sourceChatBot._rootNode = nullptr;
+    _chatLogic = sourceChatBot._chatLogic;
+    sourceChatBot._chatLogic = nullptr;
+    return *this;
+}
+
 ////
 //// EOF STUDENT CODE
 
